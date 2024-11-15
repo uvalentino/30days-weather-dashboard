@@ -20,7 +20,7 @@ class WeatherDashboard:
         params = {
             "q": city,
             "appid": self.api_key,
-            "units": "metric"
+            "units": "imperial"
         }
         
         try:
@@ -30,3 +30,57 @@ class WeatherDashboard:
         except requests.exceptions.RequestException as e:
             print(f"Error fetching weather data: {e}")
             return None
+        
+def main():
+    dashboard = WeatherDashboard()
+    
+    cities = ["Philadelphia", "Seattle", "New York"]
+    
+    for city in cities:
+        print(f"\nFetching weather for {city}...")
+        weather_data = dashboard.fetch_weather(city)
+        if weather_data:
+            temp = weather_data['main']['temp']
+            feels_like = weather_data['main']['feels_like']
+            humidity = weather_data['main']['humidity']
+            description = weather_data['weather'][0]['description']
+            
+            print(f"Temperature: {temp}°F")
+            print(f"Feels like: {feels_like}°F")
+            print(f"Humidity: {humidity}%")
+            print(f"Conditions: {description}")
+            
+            # Save to S3
+            dashboard.save_to_s3(weather_data, city)
+        else:
+            print(f"Failed to fetch weather data for {city}")
+
+if __name__ == "__main__":
+    main()
+
+
+def save_to_s3(self, weather_data, city):
+    """Save weather data to S3 bucket"""
+    if not weather_data:
+        return False
+        
+    # Create a timestamp for the filename
+    timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')
+    file_name = f"weather-data/{city}-{timestamp}.json"
+    
+    try:
+        # Add timestamp to the data
+        weather_data['timestamp'] = timestamp
+        
+        # Upload to S3
+        self.s3_client.put_object(
+            Bucket=self.bucket_name,
+            Key=file_name,
+            Body=json.dumps(weather_data),
+            ContentType='application/json'
+        )
+        print(f"Successfully saved data for {city} to S3")
+        return True
+    except Exception as e:
+        print(f"Error saving to S3: {e}")
+        return False
