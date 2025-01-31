@@ -1,5 +1,7 @@
 # Weather Data Collection System
 
+![Image](https://github.com/user-attachments/assets/455644ab-0713-4676-b598-32bbbd16dedd)
+
 ## Project Overview
 This project is a Weather Data Collection System that demonstrates core DevOps principles by combining:
 - External API Integration (OpenWeather API)
