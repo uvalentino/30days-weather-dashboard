@@ -1,8 +1,4 @@
-# 30 Days DevOps Challenge - Weather Dashboard
-
-Day 1: Building a weather data collection system using AWS S3 and OpenWeather API
-
-# Weather Data Collection System - DevOps Day 1 Challenge
+# Weather Data Collection System
 
 ## Project Overview
 This project is a Weather Data Collection System that demonstrates core DevOps principles by combining:
@@ -41,7 +37,7 @@ weather-dashboard/
   .env
   .gitignore
   requirements.txt
-
+```
 ## Setup Instructions
 1. Clone the repository:
 --bash
