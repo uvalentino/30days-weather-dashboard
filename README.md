@@ -41,7 +41,7 @@ weather-dashboard/
 ## Setup Instructions
 1. Clone the repository:
 ```
-git clone https://github.com/uvalentino/30days-weather-dashboard
+git clone https://github.com/uvalentino/weather-dashboard.git
 ```
 3. Install dependencies:
 ```
